@@ -1,0 +1,32 @@
+{
+  "name": "gulp-lodash-autobuild",
+  "version": "0.1.1",
+  "description": "Create custom Lodash build",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-util": "^3.0.5",
+    "lodash": "^4.2.0",
+    "lodash-cli": "^4.2.0",
+    "mkdirp": "^0.5.1",
+    "through2": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurent-le-graverend/gulp-lodash-autobuild.git"
+  },
+  "keywords": [
+    "lodash",
+    "builder",
+    "autobuild",
+    "custom",
+    "gulp"
+  ],
+  "author": "Laurent Le Graverend",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laurent-le-graverend/gulp-lodash-autobuild/issues"
+  },
+  "engines": {
+    "node": ">=0.10"
+  }
+}
