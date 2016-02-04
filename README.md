@@ -20,7 +20,8 @@ var lodashAutobuild = require('gulp-lodash-autobuild');
 
 var options = {
   target: '.tmp/lodash.custom.js',
-  settings: {}
+  settings: {},
+  include: ['_.chunk', '_.tap'] // Force include these functions
 };
 
 gulp.task('lodash:autobuild', function(callback) {

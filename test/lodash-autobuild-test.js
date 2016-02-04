@@ -5,7 +5,8 @@ var lodashAutobuild = require('../index');
 
 var options = {
   target: '.tmp/lodash.custom.js',
-  settings: {}
+  settings: {},
+  include: ['_.chunk', '_.tap', '_.wrongMethod'] // Force include these functions
 };
 
 gulp.task('lodash:autobuild', function(callback) {

@@ -31,6 +31,10 @@ function gulpLodashAutobuild(options) {
   var props = [];
   var search = /_\.(\w*)/g;
 
+  if (options.include) {
+    props = options.include;
+  }
+
   function log(message) {
     gutil.log(magenta(PLUGIN_NAME), message);
   }
@@ -43,6 +47,24 @@ function gulpLodashAutobuild(options) {
     return new PluginError(PLUGIN_NAME, message);
   }
 
+  function findProps(body) {
+    var content = body;
+
+    // TODO: Need to be able to handle chaining, below is just the beginning
+    // Remove line breaks
+    content = content.replace(/(\r\n|\n|\r)/gm, '');
+    // Remove comments
+    content = content.replace(/(\/\*[\w\'\s\r\n\*]*\*\/)|(\/\/[\w\s\']*)|(\<![\-\-\s\w\>\/]*\>)/gm, '');
+    // Remove bank spaces
+    content = content.replace(/\s/g, '');
+
+    // Match regex
+    var tmp = content.match(search);
+    if (tmp) {
+      props = props.concat(tmp);
+    }
+  }
+
   function transform(file, enc, callback) {
     var _this = this;
     if (file.isBuffer()) {
@@ -53,10 +75,7 @@ function gulpLodashAutobuild(options) {
       file.contents.on('data', function(chunk) {
         body += chunk;
       }).on('end', function() {
-        var tmp = body.match(search);
-        if (tmp) {
-          props = props.concat(tmp);
-        }
+        findProps(body);
         _this.push(file);
         callback();
       });

@@ -31,3 +31,11 @@ array = _.chain(array)
   .value();
 
 _.invalidMethod(array);
+
+_([1, 2, 3])
+  .tap(function(array) {
+    // Mutate input array.
+    array.pop();
+  })
+  .reverse()
+  .value();
