@@ -28,7 +28,7 @@ var PLUGIN_NAME = 'gulp-lodash-autobuild';
  */
 function gulpLodashAutobuild(options) {
   var options = options ? options : { target: './lodash.custom.js', settings: {} };
-  var dependencies = [];
+  var props = [];
   var search = /_\.(\w*)/g;
 
   function log(message) {
@@ -39,7 +39,7 @@ function gulpLodashAutobuild(options) {
     log(red('WARNING') + ' ' + message);
   }
 
-  function error(message) {
+  function raiseError(message) {
     return new PluginError(PLUGIN_NAME, message);
   }
 
@@ -55,7 +55,7 @@ function gulpLodashAutobuild(options) {
       }).on('end', function() {
         var tmp = body.match(search);
         if (tmp) {
-          dependencies = dependencies.concat(tmp);
+          props = props.concat(tmp);
         }
         _this.push(file);
         callback();
@@ -67,17 +67,25 @@ function gulpLodashAutobuild(options) {
   }
 
   function flush(callback) {
-    dependencies = _.uniq(dependencies).map(function(item) {
+    props = _.uniq(props).map(function(item) {
       return item.split('.')[1];
-    });
-    dependencies = dependencies.sort();
-    log('Lodash build includes: ' + dependencies.join(', '));
+    }).sort();
+
+    // Remove invalid property names
+    var propsInvalid = _.difference(props, _.keys(_));
+    var propsValid = _.intersection(props, _.keys(_));
+
+    log('Build includes: ' + propsValid.join(', '));
+
+    if (propsInvalid.length) {
+      warn('Invalid properties ignored: ' + propsInvalid.join(', '));
+    }
 
     childProcess.execFile(autobuild,
       [
         '-d',
         '-c',
-        'include=' + dependencies.join(',' + ''),
+        'include=' + propsValid.join(',' + ''),
         'settings=' + JSON.stringify(options.settings)
       ],
       {
@@ -85,12 +93,12 @@ function gulpLodashAutobuild(options) {
       },
       function(error, stdout, stderr) {
         if (error !== null) {
-          error(error);
+          throw raiseError(error);
         }
         mkdirp(path.dirname(options.target), function() {
           fs.writeFile(options.target, stdout, function(error) {
             if (error !== null) {
-              error(error);
+              throw raiseError(error);
             }
             callback();
           });
