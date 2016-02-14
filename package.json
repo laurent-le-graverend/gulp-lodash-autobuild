@@ -1,6 +1,6 @@
 {
   "name": "gulp-lodash-autobuild",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A gulp plugin to create custom Lodash builds",
   "repository": {
     "type": "git",
