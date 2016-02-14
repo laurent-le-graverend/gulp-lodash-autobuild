@@ -1,24 +1,24 @@
 'use strict';
 
-var _ = require('lodash');
-var fs = require('fs');
-var gutil = require('gulp-util');
-var path = require('path');
-var mkdirp = require('mkdirp');
-var through = require('through2');
-var childProcess = require('child_process');
-var PluginError = gutil.PluginError;
-var red = gutil.colors.red;
-var magenta = gutil.colors.magenta;
+const _ = require('lodash');
+const fs = require('fs');
+const gutil = require('gulp-util');
+const path = require('path');
+const mkdirp = require('mkdirp');
+const through = require('through2');
+const childProcess = require('child_process');
+const PluginError = gutil.PluginError;
+const red = gutil.colors.red;
+const magenta = gutil.colors.magenta;
 
-var pkg = require('lodash-cli/package.json'),
+const pkg = require('lodash-cli/package.json'),
   bin = pkg.bin.lodash,
   autobuild = require.resolve('lodash-cli/' + bin);
 
 /**
  * Constants
  */
-var PLUGIN_NAME = 'gulp-lodash-autobuild';
+const PLUGIN_NAME = 'gulp-lodash-autobuild';
 
 /**
  * Search for lodash functions in the stream and creates a custom Lodash build
@@ -27,9 +27,9 @@ var PLUGIN_NAME = 'gulp-lodash-autobuild';
  * @returns {stream} gulp file stream
  */
 function gulpLodashAutobuild(options) {
-  var options = options ? options : { target: './lodash.custom.js', settings: {} };
-  var props = [];
-  var search = /_\.(\w*)/g;
+  const options = options ? options : { target: './lodash.custom.js', settings: {} };
+  const search = /_\.(\w*)/g;
+  let props = [];
 
   if (options.include) {
     props = options.include;
@@ -48,7 +48,7 @@ function gulpLodashAutobuild(options) {
   }
 
   function findProps(body) {
-    var content = body;
+    let content = body;
 
     // TODO: Need to be able to handle chaining, below is just the beginning
     // Remove line breaks
@@ -59,19 +59,19 @@ function gulpLodashAutobuild(options) {
     content = content.replace(/\s/g, '');
 
     // Match regex
-    var tmp = content.match(search);
+    const tmp = content.match(search);
     if (tmp) {
       props = props.concat(tmp);
     }
   }
 
   function transform(file, enc, callback) {
-    var _this = this;
+    const _this = this;
     if (file.isBuffer()) {
       warn('Buffers not supported...');
       return callback();
     } else if (file.isStream()) {
-      var body = '';
+      let body = '';
       file.contents.on('data', function(chunk) {
         body += chunk;
       }).on('end', function() {
@@ -91,8 +91,8 @@ function gulpLodashAutobuild(options) {
     }).sort();
 
     // Remove invalid property names
-    var propsInvalid = _.difference(props, _.keys(_));
-    var propsValid = _.intersection(props, _.keys(_));
+    const propsInvalid = _.difference(props, _.keys(_));
+    const propsValid = _.intersection(props, _.keys(_));
 
     log('Build includes: ' + propsValid.join(', '));
 

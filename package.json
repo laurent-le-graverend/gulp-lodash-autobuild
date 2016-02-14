@@ -25,14 +25,14 @@
     "node": ">=0.10"
   },
   "dependencies": {
-    "gulp": "^3.9.0",
-    "gulp-util": "^3.0.5",
-    "lodash": "^4.2.0",
-    "lodash-cli": "^4.2.0",
+    "gulp-util": "^3.0.7",
+    "lodash-cli": "^4.3.0",
     "mkdirp": "^0.5.1",
-    "through2": "^2.0.0"
+    "through2": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^1.10.3"
+    "gulp": "^3.9.1",
+    "lodash": "^4.3.0",
+    "eslint": "^2.0.0"
   }
 }
