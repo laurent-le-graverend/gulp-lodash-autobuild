@@ -27,9 +27,10 @@ const PLUGIN_NAME = 'gulp-lodash-autobuild';
  * @returns {stream} gulp file stream
  */
 function gulpLodashAutobuild(options) {
-  const options = options ? options : { target: './lodash.custom.js', settings: {} };
   const search = /_\.(\w*)/g;
   let props = [];
+
+  options = options ? options : { target: './lodash.custom.js', settings: {} };
 
   if (options.include) {
     props = options.include;
