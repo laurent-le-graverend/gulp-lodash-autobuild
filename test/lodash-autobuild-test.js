@@ -1,15 +1,15 @@
 'use strict';
 
-var gulp = require('gulp');
-var lodashAutobuild = require('../index');
+const gulp = require('gulp');
+const lodashAutobuild = require('../index');
 
-var options = {
+const options = {
   target: '.tmp/lodash.custom.js',
   settings: {},
   include: ['_.chunk', '_.tap', '_.wrongMethod'] // Force include these functions
 };
 
-gulp.task('lodash:autobuild', function(callback) {
+gulp.task('lodash:autobuild', () => {
   return gulp.src('./fixtures/**/*.js', { buffer: false })
     .pipe(lodashAutobuild(options))
     .on('error', function(err) {
