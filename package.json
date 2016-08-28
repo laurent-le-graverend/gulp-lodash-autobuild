@@ -26,14 +26,14 @@
   },
   "dependencies": {
     "gulp-util": "^3.0.7",
-    "lodash-cli": ">=4.8.0",
+    "lodash-cli": ">=4.15.0",
     "mkdirp": "^0.5.1",
     "through2": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^2.10.2",
-    "eslint-config-bandlab": "^2.8.0",
+    "eslint": "^3.4.0",
+    "eslint-config-bandlab": "^3.4.0",
     "gulp": "^3.9.1",
-    "lodash": "^4.13.1"
+    "lodash": "^4.15.0"
   }
 }
