@@ -11,9 +11,9 @@ const PluginError = gutil.PluginError;
 const red = gutil.colors.red;
 const magenta = gutil.colors.magenta;
 
-const pkg = require('lodash-cli/package.json'),
-  bin = pkg.bin.lodash,
-  autobuild = require.resolve('lodash-cli/' + bin);
+const pkg = require('lodash-cli/package.json');
+const bin = pkg.bin.lodash;
+const autobuild = require.resolve('lodash-cli/' + bin);
 
 /**
  * Constants
@@ -111,7 +111,7 @@ function gulpLodashAutobuild(options) {
       {
         maxBuffer: 1024 * 600
       },
-      function(error, stdout, stderr) {
+      function(error, stdout) {
         if (error !== null) {
           throw raiseError(error);
         }
