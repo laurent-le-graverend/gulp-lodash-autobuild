@@ -15,16 +15,16 @@ Something like this will compile your Sass files:
 ```javascript
 'use strict';
 
-var gulp = require('gulp');
-var lodashAutobuild = require('gulp-lodash-autobuild');
+const gulp = require('gulp');
+const lodashAutobuild = require('gulp-lodash-autobuild');
 
-var options = {
+const options = {
   target: '.tmp/lodash.custom.js',
   settings: {},
   include: ['_.chunk', '_.tap'] // Force include these functions
 };
 
-gulp.task('lodash:autobuild', function(callback) {
+gulp.task('lodash:autobuild', () => {
   return gulp.src('./src/**/*.js', { buffer: false })
     .pipe(lodashAutobuild(options))
     .on('error', function(err) {
@@ -32,6 +32,11 @@ gulp.task('lodash:autobuild', function(callback) {
     });
 });
 ```
+
+## Note
+
+Lodash chained functions are not properly detected, you may manually include them using `options.include`.
+Eg: in `_.chain(obj).filter(...)`, `filter` won't be detected as a lodash function.
 
 ## Issues
 
